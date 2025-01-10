@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="blue_dark">#090F13</color>
+    <color name="blue_ligth">#171F25</color>
+    <color name="brown">#752E2B</color>
+    <color name="red">#C90A02</color>
+
+    <color name="beje">#F2EAB7</color>
+
+    <color name="brown_light">#A5765E</color>
+    <color name="gray">#D9D9D9</color>
+    <color name="gray_dark">#46484A</color>
+    <color name="formulario">#C3C6C9</color>
+    <color name="textoFormulario">#896969</color>
+
+</resources>
+

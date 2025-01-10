@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".FormLogin">
+
+    <TextView
+        android:id="@+id/textLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_marginRight="230dp"
+        android:fontFamily="@font/playfairdisplay_extrabold"
+        android:text="Login"
+        android:textColor="@color/gray_dark"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+
+        />
+
+    <TextView
+        android:id="@+id/mensagem"
+        android:layout_width="158dp"
+        android:layout_height="34dp"
+        android:layout_marginRight="180dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/opensans_lightitalic"
+        android:text="Bem-vindo de volta!"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textLogin"
+
+        />
+
+    <EditText
+        android:id="@+id/email"
+        style="@style/ContainerComponents"
+        android:layout_width="300dp"
+        android:layout_height="37dp"
+        android:fontFamily="@font/opensans_semibolditalic"
+        android:gravity="center_vertical"
+        android:hint="E-mail"
+        android:inputType="text"
+        android:paddingLeft="20dp"
+        android:textColor="@color/textoFormulario"
+        android:textSize="15dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textLogin" />
+
+    <EditText
+        android:id="@+id/senha"
+        style="@style/ContainerComponents"
+        android:layout_width="300dp"
+        android:layout_height="37dp"
+        android:layout_margin="180dp"
+        android:fontFamily="@font/opensans_semibolditalic"
+        android:gravity="center_vertical"
+        android:hint="Senha"
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
+        android:textColor="@color/textoFormulario"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textLogin" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLogin"
+        style="@style/Button"
+        android:layout_width="130dp"
+        android:layout_height="37dp"
+
+        android:background="@drawable/button"
+
+
+        android:fontFamily="@font/opensans_semibolditalic"
+
+
+        android:hint="Entrar"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/senha"
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        android:layout_marginTop="125dp"/>
+
+    <TextView
+        android:id="@+id/textCadastro"
+        android:layout_width="300dp"
+        android:layout_height="34dp"
+        android:layout_marginRight="200dp"
+        android:fontFamily="@font/opensans_lightitalic"
+        android:text="Ainda não possui cadastro? Clique aqui!"
+        android:textColor="@color/gray_dark"
+        android:textSize="15sp"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textLogin"
+        android:layout_marginTop="350dp"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

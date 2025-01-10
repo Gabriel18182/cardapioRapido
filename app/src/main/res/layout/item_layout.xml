@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- Área dos textos (Nome, Descrição, Valor) -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/textNome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:fontFamily="@font/opensans_semibolditalic"/>
+
+        <TextView
+            android:id="@+id/textDescricao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:fontFamily="@font/opensans_condensedlight" />
+
+        <TextView
+            android:id="@+id/textValor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:fontFamily="@font/opensans_semibolditalic"
+            android:textColor="@color/gray_dark"
+            />
+    </LinearLayout>
+
+    <!-- LinearLayout para os botões -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:layout_marginStart="8dp">
+
+        <!-- Botão de alterar -->
+        <Button
+            android:id="@+id/buttonAlterar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_item"
+            android:layout_marginBottom="4dp"
+            android:drawableTop="@drawable/icon_alterar" />
+
+        <!-- Botão de deletar -->
+        <Button
+            android:id="@+id/buttonDeletar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:drawableTop="@drawable/icon_remover"
+            android:background="@drawable/button_item" />
+    </LinearLayout>
+
+</LinearLayout>

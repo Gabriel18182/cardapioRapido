@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <size android:height="1dp" /> <!-- Define a espessura da linha -->
+    <solid android:color="#000" /> <!-- Define a cor da linha, ajustável conforme desejado -->
+</shape>

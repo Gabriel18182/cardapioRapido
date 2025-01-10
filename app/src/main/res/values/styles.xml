@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="ContainerComponents" >
+        <item name="android:layout_width"> match_parent</item>
+        <item name="android:layout_height">250dp</item>
+        <item name="android:background">@drawable/container_components</item>
+        <item name="android:layout_margin">100dp</item>
+
+    </style>
+
+
+
+    <style name="Edit_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="background">@drawable/edit_text</item>
+        <item name="android:padding">20dp</item>
+    </style>
+
+    <style name="Button" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="background">@drawable/button</item>
+    </style>
+    
+</resources>

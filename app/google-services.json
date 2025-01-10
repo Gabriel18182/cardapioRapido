@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "530562916787",
+    "project_id": "cardapio-rapido-a039d",
+    "storage_bucket": "cardapio-rapido-a039d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530562916787:android:b5323fb7eacb791ed52bc6",
+        "android_client_info": {
+          "package_name": "com.example.cardapiorapido"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNUZO87AtfIcmoWAZy-UvO9AEYV8r86kc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
