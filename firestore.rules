@@ -49,10 +49,8 @@ service cloud.firestore {
         && request.resource.data.quantidade <= 99
         && get(/databases/$(database)/documents/mesas_v2/$(request.resource.data.mesaId)).data.usuarioId == request.resource.data.usuarioId;
 
-      allow get, list: if resource.data.status == "aberto";
-
-      allow read: if request.auth != null
-        && resource.data.usuarioId == request.auth.uid;
+      allow read: if resource.data.status == "aberto"
+        || (request.auth != null && resource.data.usuarioId == request.auth.uid);
 
       allow update: if request.auth != null
         && resource.data.usuarioId == request.auth.uid;
