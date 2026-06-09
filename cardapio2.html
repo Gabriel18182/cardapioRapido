@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cardapio Rapido 2.0</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f3;
+      --ink: #232826;
+      --muted: #66706c;
+      --line: #d9ded8;
+      --accent: #08766f;
+      --accent-2: #c84f3d;
+      --surface: #ffffff;
+      --shadow: 0 14px 34px rgba(20, 34, 31, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #123c39 0%, #08766f 58%, #c84f3d 100%);
+      color: #fff;
+      padding: 34px 18px 28px;
+    }
+
+    .wrap {
+      width: min(980px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 8vw, 4.4rem);
+      line-height: 0.95;
+    }
+
+    .contact {
+      max-width: 700px;
+      margin: 18px 0 0;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 1rem;
+    }
+
+    main {
+      padding: 22px 18px 38px;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    select,
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      font: inherit;
+      padding: 11px 12px;
+    }
+
+    .mesa-fixa {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 12px 14px;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    textarea {
+      min-height: 78px;
+      resize: vertical;
+    }
+
+    .badge {
+      min-width: 44px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 14px;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .item {
+      min-height: 250px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .item h2 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+
+    .item p {
+      margin: 0;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .price {
+      color: var(--accent-2);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .controls {
+      display: grid;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 10px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+      padding: 12px 14px;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+
+    .status {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 18px;
+      color: var(--muted);
+      box-shadow: var(--shadow);
+    }
+
+    .status.error {
+      border-color: rgba(200, 79, 61, 0.45);
+      color: #9d3f31;
+    }
+
+    .toast {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      max-width: calc(100% - 32px);
+      border-radius: 8px;
+      background: #232826;
+      color: #fff;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      transform: translateY(120%);
+      transition: transform 180ms ease;
+      z-index: 3;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+    }
+
+    footer {
+      padding: 0 18px 28px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 640px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .badge {
+        width: max-content;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Pedido online</p>
+      <h1>Cardapio Rapido 2.0</h1>
+      <p class="contact" id="contato">Carregando cardapio...</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="toolbar">
+      <div>
+        <label>Mesa</label>
+        <div class="mesa-fixa" id="mesa">Carregando mesa...</div>
+      </div>
+      <div class="badge" id="total">0</div>
+    </section>
+
+    <section class="grid" id="cardapio" aria-live="polite">
+      <div class="status">Carregando produtos...</div>
+    </section>
+  </main>
+
+  <footer>Pedidos enviados diretamente para o restaurante.</footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      addDoc,
+      collection,
+      doc,
+      getDoc,
+      getDocs,
+      getFirestore,
+      query,
+      serverTimestamp,
+      where
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDNUZO87AtfIcmoWAZy-UvO9AEYV8r86kc",
+      authDomain: "cardapio-rapido-a039d.firebaseapp.com",
+      projectId: "cardapio-rapido-a039d",
+      storageBucket: "cardapio-rapido-a039d.appspot.com"
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const usuarioId = params.get("usuarioId") || params.get("u");
+    const mesaId = params.get("mesaId") || params.get("m");
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const cardapio = document.querySelector("#cardapio");
+    const contato = document.querySelector("#contato");
+    const total = document.querySelector("#total");
+    const mesaLabel = document.querySelector("#mesa");
+    const toast = document.querySelector("#toast");
+    const moeda = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    });
+
+    let mesaAtual = null;
+    let itens = [];
+
+    function mostrarToast(mensagem) {
+      toast.textContent = mensagem;
+      toast.classList.add("show");
+      window.setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+
+    function definirStatus(mensagem, erro = false) {
+      cardapio.innerHTML = "";
+      const status = document.createElement("div");
+      status.className = erro ? "status error" : "status";
+      status.textContent = mensagem;
+      cardapio.appendChild(status);
+    }
+
+    function formatarValor(valor) {
+      if (valor === undefined || valor === null || valor === "") {
+        return "";
+      }
+
+      if (typeof valor === "number") {
+        return moeda.format(valor);
+      }
+
+      const texto = String(valor).trim();
+      const numero = Number(texto.replace("R$", "").replace(".", "").replace(",", "."));
+      return Number.isFinite(numero) ? moeda.format(numero) : texto;
+    }
+
+    function renderizarMesa() {
+      mesaLabel.textContent = mesaAtual ? mesaAtual.nome || "Mesa" : "Mesa nao encontrada";
+    }
+
+    function renderizarItens() {
+      total.textContent = String(itens.length);
+
+      if (itens.length === 0) {
+        definirStatus("Nenhum produto cadastrado neste cardapio.");
+        return;
+      }
+
+      cardapio.innerHTML = "";
+      itens.forEach((item) => {
+        const article = document.createElement("article");
+        article.className = "item";
+
+        const content = document.createElement("div");
+        const title = document.createElement("h2");
+        const description = document.createElement("p");
+        const price = document.createElement("strong");
+        const controls = document.createElement("div");
+        const row = document.createElement("div");
+        const quantidade = document.createElement("input");
+        const observacao = document.createElement("textarea");
+        const button = document.createElement("button");
+
+        title.textContent = item.nome || "Produto sem nome";
+        description.textContent = item.descricao || "Sem descricao cadastrada.";
+        price.className = "price";
+        price.textContent = formatarValor(item.valor);
+
+        quantidade.type = "number";
+        quantidade.min = "1";
+        quantidade.max = "99";
+        quantidade.value = "1";
+        quantidade.inputMode = "numeric";
+        quantidade.setAttribute("aria-label", "Quantidade");
+
+        observacao.placeholder = "Observacao do pedido";
+        observacao.maxLength = 240;
+
+        button.textContent = "Confirmar pedido";
+        button.disabled = !mesaAtual;
+        button.addEventListener("click", () => confirmarPedido(item, quantidade, observacao, button));
+
+        content.append(title, description, price);
+        row.className = "row";
+        row.append(quantidade, button);
+        controls.className = "controls";
+        controls.append(observacao, row);
+        article.append(content, controls);
+        cardapio.appendChild(article);
+      });
+    }
+
+    async function confirmarPedido(item, quantidadeInput, observacaoInput, button) {
+      if (!mesaAtual) {
+        mostrarToast("Use o QR Code correto da mesa para fazer pedidos.");
+        return;
+      }
+
+      const quantidade = Math.max(1, Number.parseInt(quantidadeInput.value, 10) || 1);
+      button.disabled = true;
+      button.textContent = "Enviando...";
+
+      try {
+        await addDoc(collection(db, "pedidos_v2"), {
+          usuarioId,
+          mesaId: mesaAtual.id,
+          mesaNome: mesaAtual.nome || "Mesa",
+          itemId: item.id,
+          itemNome: item.nome || "Produto",
+          itemDescricao: item.descricao || "",
+          itemValor: String(item.valor || ""),
+          observacao: observacaoInput.value.trim(),
+          quantidade,
+          status: "aberto",
+          criadoEm: serverTimestamp(),
+          origem: "cardapio2"
+        });
+
+        quantidadeInput.value = "1";
+        observacaoInput.value = "";
+        mostrarToast("Pedido enviado para a mesa " + mesaAtual.nome + ".");
+      } catch (error) {
+        console.error(error);
+        mostrarToast("Nao foi possivel enviar o pedido.");
+      } finally {
+        button.disabled = !mesaAtual;
+        button.textContent = "Confirmar pedido";
+      }
+    }
+
+    async function carregarCardapio() {
+      if (!usuarioId || !mesaId) {
+        contato.textContent = "Cardapio nao encontrado.";
+        mesaLabel.textContent = "Mesa nao definida";
+        definirStatus("Abra o cardapio usando o QR Code especifico da sua mesa.", true);
+        return;
+      }
+
+      try {
+        contato.textContent = "Informe a quantidade e confirme seu pedido.";
+
+        const mesaDoc = doc(db, "mesas_v2", mesaId);
+        const itensQuery = query(collection(db, "itens"), where("usuarioId", "==", usuarioId));
+        const [mesaSnapshot, itensSnapshot] = await Promise.all([
+          getDoc(mesaDoc),
+          getDocs(itensQuery)
+        ]);
+
+        mesaAtual = null;
+        if (mesaSnapshot.exists() && mesaSnapshot.data().usuarioId === usuarioId) {
+          mesaAtual = { id: mesaSnapshot.id, ...mesaSnapshot.data() };
+        }
+
+        itens = [];
+        itensSnapshot.forEach((documento) => {
+          itens.push({ id: documento.id, ...documento.data() });
+        });
+        itens.sort((a, b) => String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR"));
+
+        renderizarMesa();
+        if (!mesaAtual) {
+          definirStatus("Esta mesa nao esta cadastrada ou foi removida pelo restaurante.", true);
+          return;
+        }
+        renderizarItens();
+      } catch (error) {
+        console.error(error);
+        contato.textContent = "Nao foi possivel carregar este cardapio.";
+        definirStatus("Verifique as regras do Firebase para itens, mesas_v2 e pedidos_v2.", true);
+      }
+    }
+
+    carregarCardapio();
+  </script>
+</body>
+</html>

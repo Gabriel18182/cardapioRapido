@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_cardapio"
+            android:title="Cardapio" />
+        <item
+            android:id="@+id/menu_mesas"
+            android:title="Mesas" />
+        <item
+            android:id="@+id/menu_pedidos"
+            android:title="Pedidos" />
+        <item
+            android:id="@+id/menu_qr"
+            android:title="Gerar QR 2.0" />
+        <item
+            android:id="@+id/menu_perfil"
+            android:title="Perfil" />
+    </group>
+</menu>

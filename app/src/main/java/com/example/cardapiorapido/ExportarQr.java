@@ -31,6 +31,8 @@ public class ExportarQr extends AppCompatActivity {
     private Button buttonExportar, buttonVoltar;
     private Bitmap qrBitmap;
     private String linkCardapio;
+    private String mesaId;
+    private String mesaNome;
     private ImageView iconeUsuario;
 
     @Override
@@ -42,6 +44,8 @@ public class ExportarQr extends AppCompatActivity {
         buttonExportar = findViewById(R.id.buttonCompartilhar);
         buttonVoltar = findViewById(R.id.buttonVoltar);
         iconeUsuario = findViewById(R.id.iconeUsuario);
+        mesaId = getIntent().getStringExtra("mesaId");
+        mesaNome = getIntent().getStringExtra("mesaNome");
 
         gerarQrCode();
 
@@ -77,11 +81,15 @@ public class ExportarQr extends AppCompatActivity {
     }
 
     private String montarLinkCardapio(String usuarioId) {
-        return Uri.parse(getString(R.string.cardapio_public_base_url))
+        Uri.Builder builder = Uri.parse(getString(R.string.cardapio_public_base_url))
                 .buildUpon()
-                .appendQueryParameter("usuarioId", usuarioId)
-                .build()
-                .toString();
+                .appendQueryParameter("usuarioId", usuarioId);
+
+        if (mesaId != null && !mesaId.trim().isEmpty()) {
+            builder.appendQueryParameter("mesaId", mesaId);
+        }
+
+        return builder.build().toString();
     }
 
     private Bitmap gerarBitmapQrCode(String qrContent, int tamanho) throws Exception {
@@ -125,7 +133,10 @@ public class ExportarQr extends AppCompatActivity {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("image/png");
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Acesse o cardapio: " + linkCardapio);
+            String textoCompartilhar = mesaNome == null || mesaNome.trim().isEmpty()
+                    ? "Acesse o cardapio: " + linkCardapio
+                    : "Acesse o cardapio da mesa " + mesaNome + ": " + linkCardapio;
+            shareIntent.putExtra(Intent.EXTRA_TEXT, textoCompartilhar);
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(Intent.createChooser(shareIntent, "Compartilhar QR Code"));
 

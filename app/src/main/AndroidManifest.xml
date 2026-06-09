@@ -16,6 +16,12 @@
             android:name=".TelaPrincipal"
             android:exported="false" />
         <activity
+            android:name=".MesasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PedidosActivity"
+            android:exported="false" />
+        <activity
             android:name=".FormLogin"
             android:exported="false" />
         <activity

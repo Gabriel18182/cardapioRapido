@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textNomeMesa"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:fontFamily="@font/opensans_semibolditalic"
+        android:textColor="@color/gray_dark"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/buttonAlterarMesa"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_item"
+        android:drawableTop="@drawable/icon_alterar" />
+
+    <Button
+        android:id="@+id/buttonCompartilharMesa"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_item"
+        android:text="QR"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/buttonDeletarMesa"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_item"
+        android:drawableTop="@drawable/icon_remover" />
+</LinearLayout>

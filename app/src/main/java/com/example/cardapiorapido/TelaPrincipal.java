@@ -8,10 +8,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,7 +32,10 @@ public class TelaPrincipal extends AppCompatActivity {
     private List<Item> listaItens;
     private Button buttonAdicionarItem;
     private Button buttonGerarQrCode;
+    private Button buttonMenu;
     private ImageView iconeUsuario;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +45,10 @@ public class TelaPrincipal extends AppCompatActivity {
         recyclerViewItens = findViewById(R.id.recyclerViewItens);
         buttonAdicionarItem = findViewById(R.id.buttonAdicionar);
         buttonGerarQrCode = findViewById(R.id.buttonGerar);
+        buttonMenu = findViewById(R.id.buttonMenu);
         iconeUsuario = findViewById(R.id.iconeUsuario);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigationView = findViewById(R.id.navigationView);
 
         // Configuração do RecyclerView
         recyclerViewItens.setLayoutManager(new LinearLayoutManager(this));
@@ -66,6 +75,9 @@ public class TelaPrincipal extends AppCompatActivity {
         // Carregar itens da Firestore
         carregarItens();
 
+        buttonMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+        configurarMenuLateral();
+
         // Ação do botão "Adicionar Item"
         buttonAdicionarItem.setOnClickListener(v -> {
             Intent intent = new Intent(TelaPrincipal.this, AdicionarItem.class);
@@ -74,7 +86,7 @@ public class TelaPrincipal extends AppCompatActivity {
 
         // Ação do botão "Gerar QR Code"
         buttonGerarQrCode.setOnClickListener(v -> {
-            Intent intent = new Intent(TelaPrincipal.this, ExportarQr.class);
+            Intent intent = new Intent(TelaPrincipal.this, MesasActivity.class);
             startActivity(intent);
         });
 
@@ -82,6 +94,31 @@ public class TelaPrincipal extends AppCompatActivity {
         iconeUsuario.setOnClickListener(v -> {
             Intent intent = new Intent(TelaPrincipal.this, Perfil.class);
             startActivity(intent);
+        });
+    }
+
+    private void configurarMenuLateral() {
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            drawerLayout.closeDrawer(GravityCompat.START);
+
+            if (itemId == R.id.menu_cardapio) {
+                return true;
+            } else if (itemId == R.id.menu_mesas) {
+                startActivity(new Intent(TelaPrincipal.this, MesasActivity.class));
+                return true;
+            } else if (itemId == R.id.menu_pedidos) {
+                startActivity(new Intent(TelaPrincipal.this, PedidosActivity.class));
+                return true;
+            } else if (itemId == R.id.menu_qr) {
+                startActivity(new Intent(TelaPrincipal.this, MesasActivity.class));
+                return true;
+            } else if (itemId == R.id.menu_perfil) {
+                startActivity(new Intent(TelaPrincipal.this, Perfil.class));
+                return true;
+            }
+
+            return false;
         });
     }
 

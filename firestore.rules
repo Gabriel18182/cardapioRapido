@@ -1,0 +1,70 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /itens/{itemId} {
+      allow read: if true;
+
+      allow create: if request.auth != null
+        && request.resource.data.usuarioId == request.auth.uid;
+
+      allow update: if request.auth != null
+        && resource.data.usuarioId == request.auth.uid
+        && request.resource.data.usuarioId == resource.data.usuarioId;
+
+      allow delete: if request.auth != null
+        && resource.data.usuarioId == request.auth.uid;
+    }
+
+    match /mesas_v2/{mesaId} {
+      allow get: if true;
+      allow list: if request.auth != null
+        && resource.data.usuarioId == request.auth.uid;
+
+      allow create: if request.auth != null
+        && request.resource.data.usuarioId == request.auth.uid
+        && request.resource.data.nome is string
+        && request.resource.data.nome.size() > 0
+        && request.resource.data.nome.size() <= 40;
+
+      allow update: if request.auth != null
+        && resource.data.usuarioId == request.auth.uid
+        && request.resource.data.usuarioId == resource.data.usuarioId
+        && request.resource.data.nome is string
+        && request.resource.data.nome.size() > 0
+        && request.resource.data.nome.size() <= 40;
+
+      allow delete: if request.auth != null
+        && resource.data.usuarioId == request.auth.uid;
+    }
+
+    match /pedidos_v2/{pedidoId} {
+      allow create: if request.resource.data.usuarioId is string
+        && request.resource.data.mesaId is string
+        && request.resource.data.status == "aberto"
+        && request.resource.data.quantidade is int
+        && request.resource.data.quantidade >= 1
+        && request.resource.data.quantidade <= 99
+        && get(/databases/$(database)/documents/mesas_v2/$(request.resource.data.mesaId)).data.usuarioId == request.resource.data.usuarioId;
+
+      allow read: if request.auth != null
+        && resource.data.usuarioId == request.auth.uid;
+
+      allow update: if request.auth != null
+        && resource.data.usuarioId == request.auth.uid;
+
+      allow delete: if request.auth != null
+        && resource.data.usuarioId == request.auth.uid;
+    }
+
+    match /usuarios/{userId} {
+      allow read, write: if request.auth != null
+        && request.auth.uid == userId;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

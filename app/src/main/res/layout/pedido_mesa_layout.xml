@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textMesaPedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_semibolditalic"
+        android:textColor="@color/gray_dark"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textItensPedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/opensans_condensedlight"
+        android:textColor="@color/gray_dark"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textTotalPedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/opensans_semibolditalic"
+        android:textColor="@color/brown"
+        android:textSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonFecharMesa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/button_principal"
+        android:fontFamily="@font/oleoscriptswashcaps_regular"
+        android:text="Fechar pedido da mesa"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+</LinearLayout>

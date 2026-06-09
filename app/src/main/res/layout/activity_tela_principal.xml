@@ -1,93 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     tools:context=".TelaPrincipal">
 
-    <!-- Título -->
-    <TextView
-        android:id="@+id/textTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/playfairdisplay_extrabold"
-        android:text="Cardápio Rápido"
-        android:textColor="@color/gray_dark"
-        android:textSize="40sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
 
-    <!-- RecyclerView -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewItens"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/tabela_background"
-        app:layout_constraintWidth_percent="0.9"
-        app:layout_constraintHeight_percent="0.6"
-        app:layout_constraintTop_toBottomOf="@id/textTitulo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonMenu"
+            android:layout_width="92dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_principal"
+            android:fontFamily="@font/oleoscriptswashcaps_regular"
+            android:text="Menu"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Botões -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonGerar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/button_principal"
-        android:fontFamily="@font/oleoscriptswashcaps_regular"
-        android:text="Gerar QR"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintWidth_percent="0.4"
-        app:layout_constraintStart_toStartOf="@id/recyclerViewItens"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewItens" />
+        <TextView
+            android:id="@+id/textTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/playfairdisplay_extrabold"
+            android:text="Cardapio Rapido"
+            android:textColor="@color/gray_dark"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonAdicionar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/button_principal"
-        android:fontFamily="@font/oleoscriptswashcaps_regular"
-        android:text="Adicionar item"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintWidth_percent="0.4"
-        app:layout_constraintEnd_toEndOf="@id/recyclerViewItens"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewItens" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewItens"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/tabela_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textTitulo"
+            app:layout_constraintWidth_percent="0.9" />
 
-    <!-- Rodapé -->
-    <View
-        android:id="@+id/rodape"
-        android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:background="@color/brown_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonGerar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/button_principal"
+            android:fontFamily="@font/oleoscriptswashcaps_regular"
+            android:text="Gerar QR 2.0"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@id/recyclerViewItens"
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewItens"
+            app:layout_constraintWidth_percent="0.4" />
 
-    <!-- Ícone de usuário no rodapé -->
-    <ImageView
-        android:id="@+id/iconeUsuario"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/circle"
-        android:src="@drawable/user"
-        android:scaleType="centerInside"
-        app:layout_constraintTop_toTopOf="@id/rodape"
-        app:layout_constraintBottom_toBottomOf="@id/rodape"
-        app:layout_constraintStart_toStartOf="@id/rodape"
-        app:layout_constraintEnd_toEndOf="@id/rodape" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonAdicionar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_principal"
+            android:fontFamily="@font/oleoscriptswashcaps_regular"
+            android:text="Adicionar item"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@id/recyclerViewItens"
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewItens"
+            app:layout_constraintWidth_percent="0.4" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/rodape"
+            android:layout_width="0dp"
+            android:layout_height="65dp"
+            android:background="@color/brown_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/iconeUsuario"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/circle"
+            android:scaleType="centerInside"
+            android:src="@drawable/user"
+            app:layout_constraintBottom_toBottomOf="@id/rodape"
+            app:layout_constraintEnd_toEndOf="@id/rodape"
+            app:layout_constraintStart_toStartOf="@id/rodape"
+            app:layout_constraintTop_toTopOf="@id/rodape" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white"
+        app:itemTextColor="@color/gray_dark"
+        app:menu="@menu/menu_lateral" />
+</androidx.drawerlayout.widget.DrawerLayout>

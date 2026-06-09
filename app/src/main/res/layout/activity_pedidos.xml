@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".PedidosActivity">
+
+    <TextView
+        android:id="@+id/textTituloPedidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/playfairdisplay_extrabold"
+        android:text="Pedidos"
+        android:textColor="@color/gray_dark"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPedidos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/tabela_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.65"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTituloPedidos"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonMesasPedidos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/button_principal"
+        android:fontFamily="@font/oleoscriptswashcaps_regular"
+        android:text="Mesas"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/buttonVoltarPedidos"
+        app:layout_constraintStart_toStartOf="@id/recyclerViewPedidos"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewPedidos" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonVoltarPedidos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_principal"
+        android:fontFamily="@font/oleoscriptswashcaps_regular"
+        android:text="Voltar"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/recyclerViewPedidos"
+        app:layout_constraintStart_toEndOf="@id/buttonMesasPedidos"
+        app:layout_constraintTop_toTopOf="@id/buttonMesasPedidos" />
+</androidx.constraintlayout.widget.ConstraintLayout>
