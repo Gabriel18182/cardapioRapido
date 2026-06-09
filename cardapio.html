@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cardapio Rapido</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f3;
+      --ink: #242826;
+      --muted: #66706c;
+      --line: #d9ded8;
+      --accent: #08766f;
+      --accent-2: #c84f3d;
+      --surface: #ffffff;
+      --shadow: 0 14px 34px rgba(20, 34, 31, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #123c39 0%, #08766f 56%, #c84f3d 100%);
+      color: #fff;
+      padding: 40px 18px 34px;
+    }
+
+    .wrap {
+      width: min(960px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.25rem, 8vw, 4.5rem);
+      line-height: 0.95;
+    }
+
+    .contact {
+      max-width: 680px;
+      margin: 18px 0 0;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 1rem;
+    }
+
+    main {
+      padding: 26px 18px 38px;
+    }
+
+    .summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .badge {
+      min-width: 44px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      padding: 6px 12px;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .item {
+      min-height: 150px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .item h2 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+
+    .item p {
+      margin: 0;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .price {
+      color: var(--accent-2);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .status {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 22px;
+      color: var(--muted);
+      box-shadow: var(--shadow);
+    }
+
+    .status.error {
+      border-color: rgba(200, 79, 61, 0.45);
+      color: #9d3f31;
+    }
+
+    footer {
+      padding: 0 18px 28px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.86rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Cardapio publico</p>
+      <h1>Cardapio Rapido</h1>
+      <p class="contact" id="contato">Carregando produtos...</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="summary">
+      <span>Produtos cadastrados</span>
+      <span class="badge" id="total">0</span>
+    </div>
+    <section class="grid" id="cardapio" aria-live="polite">
+      <div class="status">Carregando cardapio...</div>
+    </section>
+  </main>
+
+  <footer>Atualizado automaticamente pelo Cardapio Rapido.</footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      collection,
+      getDocs,
+      getFirestore,
+      query,
+      where
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDNUZO87AtfIcmoWAZy-UvO9AEYV8r86kc",
+      authDomain: "cardapio-rapido-a039d.firebaseapp.com",
+      projectId: "cardapio-rapido-a039d",
+      storageBucket: "cardapio-rapido-a039d.appspot.com"
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const usuarioId = params.get("usuarioId") || params.get("u");
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const cardapio = document.querySelector("#cardapio");
+    const contato = document.querySelector("#contato");
+    const total = document.querySelector("#total");
+    const moeda = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    });
+
+    function definirStatus(mensagem, erro = false) {
+      cardapio.innerHTML = "";
+      const status = document.createElement("div");
+      status.className = erro ? "status error" : "status";
+      status.textContent = mensagem;
+      cardapio.appendChild(status);
+    }
+
+    function formatarValor(valor) {
+      if (valor === undefined || valor === null || valor === "") {
+        return "";
+      }
+
+      if (typeof valor === "number") {
+        return moeda.format(valor);
+      }
+
+      const texto = String(valor).trim();
+      const numero = Number(texto.replace(",", "."));
+      return Number.isFinite(numero) ? moeda.format(numero) : texto;
+    }
+
+    function renderizarItens(itens) {
+      total.textContent = String(itens.length);
+
+      if (itens.length === 0) {
+        definirStatus("Nenhum produto cadastrado neste cardapio.");
+        return;
+      }
+
+      cardapio.innerHTML = "";
+      itens.forEach((item) => {
+        const article = document.createElement("article");
+        article.className = "item";
+
+        const content = document.createElement("div");
+        const title = document.createElement("h2");
+        const description = document.createElement("p");
+        const price = document.createElement("strong");
+
+        title.textContent = item.nome || "Produto sem nome";
+        description.textContent = item.descricao || "Sem descricao cadastrada.";
+        price.className = "price";
+        price.textContent = formatarValor(item.valor);
+
+        content.append(title, description);
+        article.append(content, price);
+        cardapio.appendChild(article);
+      });
+    }
+
+    async function carregarCardapio() {
+      if (!usuarioId) {
+        contato.textContent = "Cardapio nao encontrado.";
+        definirStatus("Abra o cardapio usando o QR Code gerado pelo aplicativo.", true);
+        return;
+      }
+
+      try {
+        contato.textContent = "Cardapio disponivel para consulta.";
+        const itensQuery = query(collection(db, "itens"), where("usuarioId", "==", usuarioId));
+        const itensSnapshot = await getDocs(itensQuery);
+        const itens = [];
+
+        itensSnapshot.forEach((documento) => {
+          itens.push({ id: documento.id, ...documento.data() });
+        });
+
+        itens.sort((a, b) => String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR"));
+        renderizarItens(itens);
+      } catch (error) {
+        console.error(error);
+        contato.textContent = "Nao foi possivel carregar este cardapio.";
+        definirStatus("Verifique se o cardapio esta publicado e se o Firebase permite leitura publica dos produtos.", true);
+      }
+    }
+
+    carregarCardapio();
+  </script>
+</body>
+</html>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CardapioRapido</string>
+    <string name="cardapio_public_base_url">https://gabriel18182.github.io/cardapioRapido/cardapio.html</string>
 </resources>
