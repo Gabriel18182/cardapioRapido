@@ -23,6 +23,17 @@
         android:textSize="16sp" />
 
     <TextView
+        android:id="@+id/textAlertaPedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/beje"
+        android:fontFamily="@font/opensans_semibold"
+        android:padding="8dp"
+        android:textColor="@color/brown"
+        android:textSize="14sp" />
+
+    <TextView
         android:id="@+id/textTotalPedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,6 +41,17 @@
         android:fontFamily="@font/opensans_semibolditalic"
         android:textColor="@color/brown"
         android:textSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonBaixarPedidos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/button_principal"
+        android:fontFamily="@font/oleoscriptswashcaps_regular"
+        android:text="Dar baixa nos novos"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonFecharMesa"

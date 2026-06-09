@@ -43,10 +43,13 @@ service cloud.firestore {
       allow create: if request.resource.data.usuarioId is string
         && request.resource.data.mesaId is string
         && request.resource.data.status == "aberto"
+        && request.resource.data.baixado == false
         && request.resource.data.quantidade is int
         && request.resource.data.quantidade >= 1
         && request.resource.data.quantidade <= 99
         && get(/databases/$(database)/documents/mesas_v2/$(request.resource.data.mesaId)).data.usuarioId == request.resource.data.usuarioId;
+
+      allow get, list: if resource.data.status == "aberto";
 
       allow read: if request.auth != null
         && resource.data.usuarioId == request.auth.uid;

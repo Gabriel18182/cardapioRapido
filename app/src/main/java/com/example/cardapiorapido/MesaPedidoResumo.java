@@ -27,6 +27,15 @@ public class MesaPedidoResumo {
         return !pedidos.isEmpty();
     }
 
+    public boolean temPedidosPendentesBaixa() {
+        for (Pedido pedido : pedidos) {
+            if (pedido.getBaixado() == null || !pedido.getBaixado()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public double getTotal() {
         double total = 0.0;
         for (Pedido pedido : pedidos) {

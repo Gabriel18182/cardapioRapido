@@ -16,22 +16,24 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/buttonAlterarMesa"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/button_item"
-        android:drawableTop="@drawable/icon_alterar" />
-
-    <Button
         android:id="@+id/buttonCompartilharMesa"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/button_item"
-        android:text="QR"
-        android:textColor="@color/white"
-        android:textSize="10sp" />
+        android:contentDescription="Gerar QR Code da mesa"
+        android:drawableTop="@drawable/ic_qr_code"
+        android:padding="8dp" />
+
+    <Button
+        android:id="@+id/buttonAlterarMesa"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_item"
+        android:contentDescription="Alterar mesa"
+        android:drawableTop="@drawable/icon_alterar"
+        android:padding="8dp" />
 
     <Button
         android:id="@+id/buttonDeletarMesa"
@@ -39,5 +41,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/button_item"
-        android:drawableTop="@drawable/icon_remover" />
+        android:contentDescription="Deletar mesa"
+        android:drawableTop="@drawable/icon_remover"
+        android:padding="8dp" />
 </LinearLayout>

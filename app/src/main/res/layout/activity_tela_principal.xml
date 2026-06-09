@@ -60,7 +60,7 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/button_principal"
             android:fontFamily="@font/oleoscriptswashcaps_regular"
-            android:text="Gerar QR 2.0"
+            android:text="Mesas"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@id/recyclerViewItens"

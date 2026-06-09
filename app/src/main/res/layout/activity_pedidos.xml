@@ -24,10 +24,23 @@
         android:id="@+id/recyclerViewPedidos"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/tabela_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.65"
+        app:layout_constraintHeight_percent="0.56"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerFiltroMesa"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <Spinner
+        android:id="@+id/spinnerFiltroMesa"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/tabela_background"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textTituloPedidos"
         app:layout_constraintWidth_percent="0.9" />

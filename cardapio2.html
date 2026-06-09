@@ -122,6 +122,50 @@
       gap: 14px;
     }
 
+    .pedido-atual {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      padding: 18px;
+    }
+
+    .pedido-atual h2 {
+      margin: 0 0 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+    }
+
+    .pedido-linha {
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 4px;
+      padding: 10px 0;
+    }
+
+    .pedido-linha:first-of-type {
+      border-top: 0;
+    }
+
+    .pedido-meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .pedido-status {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .pedido-total {
+      border-top: 1px solid var(--line);
+      color: var(--accent-2);
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding-top: 12px;
+    }
+
     .item {
       min-height: 250px;
       border: 1px solid var(--line);
@@ -250,6 +294,11 @@
       <div class="badge" id="total">0</div>
     </section>
 
+    <section class="pedido-atual" id="pedidoAtual">
+      <h2>Pedido da mesa ate agora</h2>
+      <div id="pedidoAtualLista" class="pedido-meta">Carregando pedidos da mesa...</div>
+    </section>
+
     <section class="grid" id="cardapio" aria-live="polite">
       <div class="status">Carregando produtos...</div>
     </section>
@@ -267,6 +316,7 @@
       getDoc,
       getDocs,
       getFirestore,
+      onSnapshot,
       query,
       serverTimestamp,
       where
@@ -288,6 +338,8 @@
     const contato = document.querySelector("#contato");
     const total = document.querySelector("#total");
     const mesaLabel = document.querySelector("#mesa");
+    const pedidoAtual = document.querySelector("#pedidoAtual");
+    const pedidoAtualLista = document.querySelector("#pedidoAtualLista");
     const toast = document.querySelector("#toast");
     const moeda = new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -296,6 +348,8 @@
 
     let mesaAtual = null;
     let itens = [];
+    let pedidosAbertos = [];
+    let cancelarPedidosListener = null;
 
     function mostrarToast(mensagem) {
       toast.textContent = mensagem;
@@ -381,6 +435,116 @@
       });
     }
 
+    function renderizarPedidoAtual() {
+      if (!mesaAtual) {
+        pedidoAtual.style.display = "none";
+        return;
+      }
+
+      pedidoAtual.style.display = "block";
+
+      if (pedidosAbertos.length === 0) {
+        pedidoAtualLista.className = "pedido-meta";
+        pedidoAtualLista.textContent = "Nenhum pedido confirmado ainda.";
+        return;
+      }
+
+      pedidoAtualLista.className = "";
+      pedidoAtualLista.innerHTML = "";
+      let totalAberto = 0;
+
+      pedidosAbertos.forEach((pedido) => {
+        const linha = document.createElement("div");
+        const nome = document.createElement("strong");
+        const meta = document.createElement("div");
+        const obs = document.createElement("div");
+        const status = document.createElement("div");
+        const quantidade = Math.max(1, Number.parseInt(pedido.quantidade, 10) || 1);
+        const valorUnitario = parseValor(pedido.itemValor);
+
+        totalAberto += valorUnitario * quantidade;
+        linha.className = "pedido-linha";
+        nome.textContent = quantidade + "x " + (pedido.itemNome || "Produto") + " - " + formatarValor(pedido.itemValor);
+        meta.className = "pedido-meta";
+        meta.textContent = "Pedido as " + formatarHora(pedido.criadoEm);
+        status.className = "pedido-status";
+        status.textContent = pedido.baixado ? "Em preparacao" : "Enviado ao restaurante";
+
+        linha.append(nome, meta, status);
+        if (pedido.observacao) {
+          obs.className = "pedido-meta";
+          obs.textContent = "Obs: " + pedido.observacao;
+          linha.appendChild(obs);
+        }
+        pedidoAtualLista.appendChild(linha);
+      });
+
+      const totalLinha = document.createElement("div");
+      totalLinha.className = "pedido-total";
+      totalLinha.textContent = "Total parcial: " + moeda.format(totalAberto);
+      pedidoAtualLista.appendChild(totalLinha);
+    }
+
+    function parseValor(valor) {
+      if (valor === undefined || valor === null || valor === "") {
+        return 0;
+      }
+
+      if (typeof valor === "number") {
+        return valor;
+      }
+
+      const texto = String(valor).trim();
+      const numero = Number(texto.replace("R$", "").replace(".", "").replace(",", "."));
+      return Number.isFinite(numero) ? numero : 0;
+    }
+
+    function formatarHora(timestamp) {
+      if (!timestamp || !timestamp.seconds) {
+        return "--:--";
+      }
+
+      return new Date(timestamp.seconds * 1000).toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function iniciarPedidosDaMesa() {
+      if (!mesaAtual) {
+        renderizarPedidoAtual();
+        return;
+      }
+
+      if (cancelarPedidosListener) {
+        cancelarPedidosListener();
+      }
+
+      const pedidosQuery = query(
+        collection(db, "pedidos_v2"),
+        where("usuarioId", "==", usuarioId),
+        where("mesaId", "==", mesaAtual.id),
+        where("status", "==", "aberto")
+      );
+
+      cancelarPedidosListener = onSnapshot(pedidosQuery, (snapshot) => {
+        pedidosAbertos = [];
+        snapshot.forEach((documento) => {
+          pedidosAbertos.push({ id: documento.id, ...documento.data() });
+        });
+        pedidosAbertos.sort((a, b) => {
+          const aSeconds = a.criadoEm?.seconds || 0;
+          const bSeconds = b.criadoEm?.seconds || 0;
+          return aSeconds - bSeconds;
+        });
+        renderizarPedidoAtual();
+      }, (error) => {
+        console.error(error);
+        pedidoAtualLista.className = "status error";
+        pedidoAtualLista.textContent = "Nao foi possivel carregar os pedidos da mesa.";
+      });
+    }
+
     async function confirmarPedido(item, quantidadeInput, observacaoInput, button) {
       if (!mesaAtual) {
         mostrarToast("Use o QR Code correto da mesa para fazer pedidos.");
@@ -403,6 +567,7 @@
           observacao: observacaoInput.value.trim(),
           quantidade,
           status: "aberto",
+          baixado: false,
           criadoEm: serverTimestamp(),
           origem: "cardapio2"
         });
@@ -453,6 +618,7 @@
           definirStatus("Esta mesa nao esta cadastrada ou foi removida pelo restaurante.", true);
           return;
         }
+        iniciarPedidosDaMesa();
         renderizarItens();
       } catch (error) {
         console.error(error);

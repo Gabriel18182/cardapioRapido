@@ -12,7 +12,7 @@
             android:title="Pedidos" />
         <item
             android:id="@+id/menu_qr"
-            android:title="Gerar QR 2.0" />
+            android:title="QR por mesa" />
         <item
             android:id="@+id/menu_perfil"
             android:title="Perfil" />

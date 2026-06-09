@@ -13,8 +13,10 @@ public class Pedido {
     private String itemValor;
     private String observacao;
     private String status;
+    private Boolean baixado;
     private int quantidade;
     private Timestamp criadoEm;
+    private Timestamp baixadoEm;
 
     public Pedido() {
     }
@@ -99,6 +101,14 @@ public class Pedido {
         this.status = status;
     }
 
+    public Boolean getBaixado() {
+        return baixado;
+    }
+
+    public void setBaixado(Boolean baixado) {
+        this.baixado = baixado;
+    }
+
     public int getQuantidade() {
         return quantidade;
     }
@@ -113,5 +123,13 @@ public class Pedido {
 
     public void setCriadoEm(Timestamp criadoEm) {
         this.criadoEm = criadoEm;
+    }
+
+    public Timestamp getBaixadoEm() {
+        return baixadoEm;
+    }
+
+    public void setBaixadoEm(Timestamp baixadoEm) {
+        this.baixadoEm = baixadoEm;
     }
 }
